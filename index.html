@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shopping Zone – Indian Fashion & Home Picks</title>
+<style>
+:root{--bg:#fff8f3;--card:#fff;--text:#2a1e1a;--muted:#7a6a63;--brand:#d6336c;--brand2:#f08c00;--line:#f0e1d8;--shadow:0 8px 24px rgba(214,51,108,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1414;--card:#261d1d;--text:#f6ebe6;--muted:#b9a79f;--line:#3a2d2d;--shadow:0 8px 24px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--bg:#1a1414;--card:#261d1d;--text:#f6ebe6;--muted:#b9a79f;--line:#3a2d2d;--shadow:0 8px 24px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.3rem;background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+#search{flex:1;min-width:180px;padding:10px 14px;border:1px solid var(--line);border-radius:99px;background:var(--bg);color:var(--text);font-size:1rem}
+.hero{padding:48px 16px;text-align:center;background:linear-gradient(135deg,#d6336c,#f08c00);color:#fff;animation:fade .8s ease}
+.hero h1{margin:0 0 8px;font-size:clamp(1.6rem,5vw,2.8rem)}.hero p{margin:0 auto;max-width:560px;opacity:.95}
+.sample{background:#fff3bf;color:#5c4a00;text-align:center;padding:8px 12px;font-size:.9rem}
+main{max-width:1100px;margin:0 auto;padding:20px 16px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.cats button{white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 16px;border-radius:99px;cursor:pointer;font-size:.95rem;transition:.2s}
+.cats button.on,.cats button:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+h2{margin:22px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);animation:rise .5s ease both;transition:transform .25s}
+.card:hover{transform:translateY(-5px)}
+.img{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;background:linear-gradient(135deg,#ffe3ec,#ffe8cc)}
+.img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.tag{position:absolute;top:8px;left:8px;background:#fff3bf;color:#5c4a00;font-size:.7rem;padding:2px 8px;border-radius:99px;z-index:1}
+.off{position:absolute;top:8px;right:8px;background:var(--brand);color:#fff;font-size:.75rem;padding:2px 8px;border-radius:99px;z-index:1}
+.body{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cat{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.name{font-weight:700}.desc{font-size:.88rem;color:var(--muted);flex:1}
+.price{font-size:1.15rem;font-weight:800}.mrp{text-decoration:line-through;color:var(--muted);font-weight:400;font-size:.9rem;margin-left:6px}
+.buy{display:block;text-align:center;background:linear-gradient(90deg,var(--brand),var(--brand2));color:#fff;border:0;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:1rem;transition:.2s}
+.buy:hover{filter:brightness(1.1);transform:scale(1.02)}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+footer{border-top:1px solid var(--line);padding:24px 16px 90px;text-align:center;color:var(--muted);font-size:.85rem;max-width:800px;margin:0 auto}
+.wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));background:#25d366;color:#fff;border:0;border-radius:99px;padding:12px 18px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);font-size:1rem;animation:pulse 2s infinite}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;transition:.3s;max-width:90%;text-align:center;font-size:.9rem}
+#toast.show{opacity:1}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pulse{50%{box-shadow:0 0 0 10px rgba(37,211,102,.15)}}
+#admin{max-width:1100px;margin:16px auto 0;padding:16px;background:var(--card);border:2px dashed var(--brand);border-radius:16px}
+#admin h2{margin:0 0 6px}#admin .hint{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+#admin .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+#admin input,#admin select,#admin textarea{padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font:inherit;width:100%}
+#admin label{font-size:.85rem;color:var(--muted)}
+#admin button{padding:10px 14px;border:0;border-radius:10px;background:var(--brand);color:#fff;font-weight:700;cursor:pointer}
+#admin .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#admin .row button{background:#495057}
+#a-list .it{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+#a-list .it button{background:#c92a2a;padding:6px 10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🛍️ Shopping Zone</div>
+  <input id="search" type="search" placeholder="Search kurtis, shirts, decor…" aria-label="Search products">
+</header>
+<div class="sample">⚠️ Demo mode: all products below are SAMPLE data. Add your real products and links in the product list.</div>
+<section class="hero">
+  <h1>Trending Indian Fashion & Home Picks</h1>
+  <p>Hand-picked styles for every day. Tap Buy Now to visit the seller’s website.</p>
+</section>
+<section id="admin" hidden>
+<h2>🔒 Owner panel</h2>
+<p class="hint">Only you see this (open the site with #admin at the end of the address). Add products, then press “Download products file” and upload that file with your website.</p>
+<div class="form">
+<input id="a-name" placeholder="Product name">
+<select id="a-cat"></select>
+<input id="a-price" type="number" min="1" placeholder="Price in ₹">
+<input id="a-mrp" type="number" min="1" placeholder="Original price ₹ (optional)">
+<input id="a-url" type="url" placeholder="Your product link (https://…)">
+<textarea id="a-desc" rows="2" placeholder="Short description in your own words"></textarea>
+<label>Product image<input id="a-img" type="file" accept="image/*"></label>
+<button id="a-add">➕ Add product</button>
+</div>
+<div id="a-list"></div>
+<div class="row"><button id="a-export">⬇ Download products file</button><button id="a-clear">Remove sample products</button><button id="a-reset">Reset my changes</button></div>
+</section>
+<main>
+  <div class="cats" id="cats"></div>
+  <h2 id="title">Trending Products</h2>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>No products found. Try another search.</div>
+</main>
+<footer>
+  <p><strong>Affiliate Disclosure:</strong> Some links on this website may be affiliate links. If you buy through them, we may earn a small commission at no extra cost to you. Prices, offers and availability are set by the seller and may change; please check the seller’s website before buying.</p>
+  <p>© Shopping Zone. We do not process payments or orders on this site.</p>
+</footer>
+<button class="wa" id="wa">💬 WhatsApp</button>
+<div id="toast"></div>
+
+<script src="products-data.js"></script>
+<script>
+/* ============ SETTINGS (edit these) ============ */
+// Your WhatsApp number with country code, digits only. Example: "919876543210"
+const WHATSAPP_NUMBER = "";
+const WHATSAPP_MESSAGE = "Hello Shopping Zone, I have an enquiry.";
+
+/* ============ PRODUCT LIST (edit this) ============
+ Each product:
+  name, category, price (number, in ₹), description,
+  url   -> the REAL product / affiliate link (paste yours here),
+  mrp   -> OPTIONAL original price. Discount % shows only if you add it.
+  image -> OPTIONAL image link or file (e.g. "images/kurti1.jpg"),
+  emoji -> shown when no image is given,
+  sample -> true for demo products. Remove it for real products.
+ Categories allowed: "Kurtis", "Women's Fashion", "Men's Fashion", "Beauty", "Home Decor"
+*/
+let PRODUCTS = [
+ {name:"Cotton Straight Kurti",category:"Kurtis",price:599,emoji:"👚",description:"Sample: everyday cotton kurti.",url:"",sample:true},
+ {name:"Printed Anarkali Kurti",category:"Kurtis",price:899,emoji:"👗",description:"Sample: flared printed kurti for festive days.",url:"",sample:true},
+ {name:"Embroidered Kurti Set",category:"Kurtis",price:1299,emoji:"🧵",description:"Sample: kurti with matching bottom.",url:"",sample:true},
+ {name:"Floral Maxi Dress",category:"Women's Fashion",price:1199,emoji:"👗",description:"Sample: light and breezy summer dress.",url:"",sample:true},
+ {name:"Silk Blend Saree",category:"Women's Fashion",price:1799,emoji:"🥻",description:"Sample: elegant saree for occasions.",url:"",sample:true},
+ {name:"Casual Linen Shirt",category:"Men's Fashion",price:799,emoji:"👔",description:"Sample: breathable regular-fit shirt.",url:"",sample:true},
+ {name:"Cotton Kurta Pyjama",category:"Men's Fashion",price:1499,emoji:"🧥",description:"Sample: classic festive wear set.",url:"",sample:true},
+ {name:"Hydrating Face Serum",category:"Beauty",price:449,emoji:"🧴",description:"Sample: daily skincare serum.",url:"",sample:true},
+ {name:"Matte Lipstick Set",category:"Beauty",price:349,emoji:"💄",description:"Sample: set of everyday shades.",url:"",sample:true},
+ {name:"Handcrafted Wall Hanging",category:"Home Decor",price:699,emoji:"🪞",description:"Sample: decorative wall piece.",url:"",sample:true},
+ {name:"Ceramic Flower Vase",category:"Home Decor",price:549,emoji:"🏺",description:"Sample: tabletop vase for your living room.",url:"",sample:true},
+ {name:"Scented Candle Trio",category:"Home Decor",price:399,emoji:"🕯️",description:"Sample: relaxing home fragrance candles.",url:"",sample:true}
+];
+const CATEGORIES = ["All","Kurtis","Women's Fashion","Men's Fashion","Beauty","Home Decor"];
+/* ============ END OF EDITABLE PART ============ */
+const ADMIN = location.hash === "#admin";
+if (window.PRODUCTS_DATA && window.PRODUCTS_DATA.length) PRODUCTS = window.PRODUCTS_DATA;
+if (ADMIN) { try { const s = JSON.parse(localStorage.getItem("sz_products")); if (Array.isArray(s)) PRODUCTS = s; } catch(e) {} }
+
+let cat = "All", q = "";
+const $ = id => document.getElementById(id);
+const inr = n => "₹" + Number(n).toLocaleString("en-IN");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),3500)}
+
+function render(){
+  const list = PRODUCTS.map((p,i)=>({...p,i})).filter(p =>
+    (cat==="All"||p.category===cat) &&
+    (p.name+" "+p.description+" "+p.category).toLowerCase().includes(q));
+  $("title").textContent = cat==="All" && !q ? "Trending Products" : (cat==="All"?"Search results":cat);
+  $("empty").hidden = list.length>0;
+  document.querySelector(".sample").hidden = !PRODUCTS.some(p=>p.sample);
+  $("grid").innerHTML = list.map((p,n)=>{
+    const off = p.mrp && p.mrp>p.price ? Math.round((1-p.price/p.mrp)*100) : 0;
+    return `<article class="card" style="animation-delay:${n*60}ms">
+      <div class="img">${p.sample?'<span class="tag">SAMPLE</span>':''}${off?`<span class="off">${off}% off</span>`:''}
+        ${p.image?`<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">`:''}${esc(p.emoji||"🛍️")}</div>
+      <div class="body"><div class="cat">${esc(p.category)}</div><div class="name">${esc(p.name)}</div>
+      <div class="desc">${esc(p.description)}</div>
+      <div class="price">${inr(p.price)}${off?`<span class="mrp">${inr(p.mrp)}</span>`:''}</div>
+      <button class="buy" data-i="${p.i}">Buy Now</button></div></article>`;
+  }).join("");
+}
+
+$("cats").innerHTML = CATEGORIES.map(c=>`<button data-c="${esc(c)}" class="${c==="All"?"on":""}">${esc(c)}</button>`).join("");
+$("cats").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  cat=b.dataset.c; document.querySelectorAll(".cats button").forEach(x=>x.classList.toggle("on",x===b)); render();
+});
+$("search").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();render()});
+$("grid").addEventListener("click",e=>{
+  const b=e.target.closest(".buy"); if(!b) return;
+  const url = (PRODUCTS[b.dataset.i].url||"").trim();
+  if(!/^https?:\/\//i.test(url)){toast("This is a sample product. Add its real link in the PRODUCTS list.");return}
+  window.open(url,"_blank","noopener,noreferrer");
+});
+$("wa").addEventListener("click",()=>{
+  const num = WHATSAPP_NUMBER.replace(/\D/g,"");
+  if(!num){toast("Add your WhatsApp number in the settings at the top of the script.");return}
+  window.open("https://wa.me/"+num+"?text="+encodeURIComponent(WHATSAPP_MESSAGE),"_blank","noopener");
+});
+render();
+
+/* ===== Owner panel (only visible with #admin) ===== */
+if (ADMIN) {
+  $("admin").hidden = false;
+  $("a-cat").innerHTML = CATEGORIES.slice(1).map(c=>`<option>${esc(c)}</option>`).join("");
+  const save = () => { try { localStorage.setItem("sz_products", JSON.stringify(PRODUCTS)); } catch(e) { toast("Could not save in this browser. Download the file now and use smaller images."); } };
+  const refresh = () => { render(); $("a-list").innerHTML = PRODUCTS.map((p,i)=>`<div class="it"><span>${esc(p.name)} – ${inr(p.price)}${p.sample?" (sample)":""}</span><button data-d="${i}">Delete</button></div>`).join(""); };
+  const readImage = file => new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>{ const im=new Image(); im.onload=()=>{ const s=Math.min(1,700/Math.max(im.width,im.height)); const c=document.createElement("canvas"); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext("2d").drawImage(im,0,0,c.width,c.height); res(c.toDataURL("image/jpeg",0.72)); }; im.onerror=rej; im.src=r.result; }; r.onerror=rej; r.readAsDataURL(file); });
+  $("a-add").onclick = async () => {
+    const name=$("a-name").value.trim(), price=Number($("a-price").value), mrp=Number($("a-mrp").value), url=$("a-url").value.trim(), f=$("a-img").files[0];
+    if(!name||!price){toast("Please enter the product name and price.");return}
+    if(!/^https?:\/\//i.test(url)){toast("Please paste the full product link starting with https://");return}
+    const p = {name, category:$("a-cat").value, price, description:$("a-desc").value.trim(), url, emoji:"🛍️"};
+    if(mrp>price) p.mrp=mrp;
+    if(f){ try { p.image = await readImage(f); } catch(e) { toast("That image could not be read. Try another one."); return; } }
+    PRODUCTS.unshift(p); save(); refresh();
+    ["a-name","a-price","a-mrp","a-url","a-desc","a-img"].forEach(id=>$(id).value="");
+    toast("Product added. Remember to download the products file when you finish.");
+  };
+  $("a-list").onclick = e => { const b=e.target.closest("button"); if(!b) return; PRODUCTS.splice(Number(b.dataset.d),1); save(); refresh(); };
+  $("a-clear").onclick = () => { PRODUCTS = PRODUCTS.filter(p=>!p.sample); save(); refresh(); };
+  $("a-reset").onclick = () => { try { localStorage.removeItem("sz_products"); } catch(e) {} location.reload(); };
+  $("a-export").onclick = () => {
+    const blob = new Blob(["window.PRODUCTS_DATA = " + JSON.stringify(PRODUCTS, null, 1) + ";"], {type:"text/javascript"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "products-data.js"; a.click();
+  };
+  refresh();
+}
+</script>
+</body>
+</html>
